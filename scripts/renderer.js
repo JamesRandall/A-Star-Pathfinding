@@ -78,6 +78,8 @@ define(["jquery"], function($) {
 			var rowIndex;
 			var metrics;
 			var movementCost;
+			var pathIndex;
+			var pathCell;
 			
 			metrics = boardMetrics(board);
 			context = getContext();
@@ -94,9 +96,14 @@ define(["jquery"], function($) {
 				}
 			}
 			
+			context.fillStyle = "rgba(192,192,192,1.0)";
+			for(pathIndex = 0; pathIndex < board.path.length; pathIndex++) {
+				pathCell = board.path[pathIndex];
+				drawCell(context, pathCell.x, pathCell.y, metrics);
+			}
+			
 			context.fillStyle = "rgba(219,44,38,1.0)";
 			drawPlayer(context, board.player.x, board.player.y, metrics);
-			
 			drawGrid(context, metrics);
 		}
 	};	

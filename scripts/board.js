@@ -21,7 +21,7 @@ define(["metrics"], function(metrics) {
 			for (columnIndex = 1; columnIndex < board.width; columnIndex += 2) {
 				for (rowIndex = 0; rowIndex < (board.height/3*2).integer(); rowIndex++) {
 					calculatedRowIndex = fromTop ? rowIndex : board.height-1-rowIndex;
-					board.setMovementCost(columnIndex, calculatedRowIndex, board.impassable);
+					board.setMovementCost(columnIndex, calculatedRowIndex, board.movementCosts.impassable);
 				}
 				fromTop = !fromTop;
 			}	
@@ -52,12 +52,13 @@ define(["metrics"], function(metrics) {
 					y: 0
 				},
 				movementCosts: {
-					empty: 0,
+					empty: 1,
 					impassable: -1
 				},
 				width: metrics.boardWidth,
 				height: metrics.boardHeight,
 				cells: board,
+				path: [],
 				getMovementCost: function(column, row) {
 					return this.cells[row][column];
 				},

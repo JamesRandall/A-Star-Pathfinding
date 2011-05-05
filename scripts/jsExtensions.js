@@ -17,5 +17,11 @@ define(function()
 		Number['randomInteger'] = function(upperBound) {
 			return (Math.random() * upperBound).integer();
 		};
+		
+		Array.method('remove', function(from, to) {
+		  	var rest = this.slice((to || from) + 1 || this.length);
+			this.length = from < 0 ? this.length + from : from;
+			return this.push.apply(this, rest);
+		});
 	};
 });
