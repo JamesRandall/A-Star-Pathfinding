@@ -81,6 +81,7 @@ define(["metrics"], function(metrics) {
 					var found;
 					
 					this.clear();
+					this.path = [];
 					patternBuilders[boardType](this);
 					
 					found = false;
