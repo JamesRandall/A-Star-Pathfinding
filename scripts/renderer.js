@@ -96,7 +96,7 @@ define(["jquery"], function($) {
 				}
 			}
 			
-			context.fillStyle = "rgba(192,192,192,1.0)";
+			context.fillStyle = "rgba(0,192,0,1.0)";
 			for(pathIndex = 0; pathIndex < board.path.length; pathIndex++) {
 				pathCell = board.path[pathIndex];
 				drawCell(context, pathCell.x, pathCell.y, metrics);
