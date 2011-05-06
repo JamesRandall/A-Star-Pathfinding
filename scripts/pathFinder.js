@@ -1,4 +1,4 @@
-define(function() {
+define(["cellList", "cell"], function(createCellList, createCell) {
 	var adjacentCellOffsets = [
 	    // horizontal and vertical - examining these first leads to more natural paths
 		{ x: -1, y: 0 },
@@ -44,7 +44,7 @@ define(function() {
 					}
 					else {
 						adjacentHCost = manhattanCost(board.player.x, board.player.y, targetX, targetY);
-						adjacentCell = new Cell(adjacentX, adjacentY, cell, adjacentMovementCost, adjacentHCost);
+						adjacentCell = createCell(adjacentX, adjacentY, cell, adjacentMovementCost, adjacentHCost);
 						openList.add(adjacentCell);
 					}
 				}
@@ -52,73 +52,9 @@ define(function() {
 		}
 	}
 	
-	var Cell = function(x, y, parentCell, movementCost, hCost) {		
-		this.x = x;
-		this.y = y;
-		this.parentCell = parentCell;
-		this.gCost = parentCell !== null ? parentCell.gCost + movementCost : movementCost;
-		this.hCost = hCost;
-		this.fCost = function() {
-			return this.gCost + this.hCost;
-		};
-	};
-	
-	var CellList = function() {
-		this.contents = [];
-		this.lowestCost = function() { 
-			var lowestCostCell = null;
-			var currentCell;
-			var index;
-			for(index = 0; index < this.contents.length; index++) {
-				currentCell = this.contents[index];
-				if (lowestCostCell === null || currentCell.fCost() < lowestCostCell.fCost()) {
-					lowestCostCell = currentCell;
-				}
-			}
-			return lowestCostCell;
-		};
-		this.containsCell = function(x, y) {
-			var currentCell;
-			var index;
-			var result = false;
-			for(index = 0; index < this.contents.length; index++) {
-				currentCell = this.contents[index];
-				if (currentCell.x === x && currentCell.y === y) {
-					result = true;
-					break;
-				}
-			}
-			return result;
-		};
-		this.getCell = function(x, y) {
-			var currentCell;
-			var index;
-			var result;
-			
-			result = null;
-			
-			for(index = 0; index < this.contents.length; index++) {
-				currentCell = this.contents[index];
-				if (currentCell.x === x && currentCell.y === y) {
-					result = currentCell;
-					break;
-				}
-			}
-			return result;
-		};
-		this.add = function(cell) {
-			this.contents.push(cell);
-		};
-		this.remove = function(cell) {
-			var index = this.contents.indexOf(cell);
-			this.contents.remove(index);
-		};
-		this.length = function() { return this.contents.length; };
-	};
-	
 	return function(board, targetX, targetY) {
-		var openList = new CellList();
-		var closedList = new CellList();
+		var openList = createCellList();
+		var closedList = createCellList();
 		var targetCell = null;
 		var cell;
 		var result = [];
@@ -128,7 +64,7 @@ define(function() {
 			return result;
 		}
 		
-		openList.add(new Cell(board.player.x, board.player.y, null, 0, 0));
+		openList.add(createCell(board.player.x, board.player.y, null, 0, 0));
 		while(openList.length() > 0 && targetCell === null)
 		{
 			cell = openList.lowestCost();
