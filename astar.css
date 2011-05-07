@@ -7,7 +7,8 @@ div#astar {
   background-color: white;
   width: 1024px;
   height: 1024px;
-  padding: 0; }
+  padding: 0em 0 3em 0;
+}
 
 div#browserNotSupported {
   display: none;

@@ -19,12 +19,16 @@ define(["jquery", "board", "renderer", "pathFinder"], function($,boardFactory,re
 				var x = e.pageX - canvasPos.left;
 				var y = e.pageY - canvasPos.top;
 				var boardPosition = renderer.getBoardCoordinates(that.board, x, y);
+				var startTime = new Date().getTime();
 				that.board.path = pathFinder(that.board, boardPosition.x, boardPosition.y);
 				if (that.board.path.length > 0) {
 					that.board.player.x = boardPosition.x;
 					that.board.player.y = boardPosition.y;
 				}
+				var endTime = new Date().getTime();
 				renderer.render(that.board);
+				
+				$('#timeTaken').html((endTime-startTime) + ' ms');
 			});
 			
 			this.board = boardFactory.create();
